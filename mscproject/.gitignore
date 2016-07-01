@@ -1,0 +1,59 @@
+# Compiled source #
+###################
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+*.css
+*.xsl
+
+# Packages #
+############
+# it's better to unpack these files and commit the raw source
+# git has its own built in compression methods
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Logs and databases #
+######################
+*.log
+*.sql
+*.sqlite
+*.cache
+
+# Stuff that SBT puts in your folders #
+#######################################
+*.cache-main
+*.xml
+*.history
+*data
+*export
+*copy-resources
+*inputs
+*inc_compile_2.11
+*input_dsp
+*org.eclipse.core.resources.prefs
+*org.scala-ide.sdt.core.prefs
+*out
+*output
+*output_dsp
+*resolved.xml.properties
+*succeeded_tests
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
