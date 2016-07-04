@@ -37,24 +37,24 @@ class GameServerWithCSV extends FunSuite {
   gs.start
   
   test("A Player should receive the First data item sent from the server") {
-    //assert(p1.getReceivedData().contains(serverMessages(1)))
+    assert(p1.getReceivedData().contains(serverMessages(1)))
   }
   test("A Player should receive the Final data item from the server") {
-    //assert(p1.getReceivedData().contains(serverMessages(serverMessages.length-1)))
+    assert(p1.getReceivedData().contains(serverMessages(serverMessages.length-1)))
   }
   
   test("Each player should receive the same data items") {
-    //assert(p1.getReceivedData().equals(p2.getReceivedData()))
+    assert(p1.getReceivedData().equals(p2.getReceivedData()))
   }
   
   /**
    * testing GameServer with greater than 2 (>2) Players
    */
   test("Player 1 and Player 3 get the same data") {
-    //assert(p1.getReceivedData().equals(p3.getReceivedData()))
+    assert(p1.getReceivedData().equals(p3.getReceivedData()))
   }
   test("Player 2 and Player 4 get the same data") {
-    //assert(p2.getReceivedData().equals(p4.getReceivedData()))
+    assert(p2.getReceivedData().equals(p4.getReceivedData()))
   }
   test("Messages can be 'asInstanceOf[ServerMessage]") {
     val sm = p1.getReceivedData()
