@@ -4,7 +4,7 @@ import org.scalatest.FunSuite
 import main.traits.ServerMessage
 import main.traits.Player
 import main.GameServer.GameServer
-import main.GameServer.PlayerImpl
+import main.Players.PlayerImpl
 import main.DataConverter.CSVToServerMessage
 import com.softwaremill.macwire._
 import main.traits.DataItem

@@ -5,7 +5,7 @@ import org.scalatest.FunSuite
 import org.scalatest.Matchers._
 import com.softwaremill.macwire._
 import main.DataConverter.CSVToServerMessage
-import main.GameServer.PlayerImpl
+import main.Players.PlayerImpl
 import main.traits.Player
 import main.traits.ServerMessage
 import main.GameServer.GameServer

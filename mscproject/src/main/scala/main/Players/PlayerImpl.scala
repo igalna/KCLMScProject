@@ -1,10 +1,9 @@
-package main.GameServer
+package main.Players
 
 import main.traits.Player
 import main.traits.Message
 import scala.collection.mutable.ListBuffer
 import java.util.UUID
-import main.traits.ServerMessage
 
 class PlayerImpl(val playerId: UUID) extends Player {
   

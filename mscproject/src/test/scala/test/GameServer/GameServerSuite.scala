@@ -1,7 +1,7 @@
 package test.GameServer
 
 import org.scalatest.FunSuite
-import main.GameServer.PlayerImpl
+import main.Players.PlayerImpl
 import main.traits.Player
 import main.GameServer.GameServer
 import com.softwaremill.macwire._
