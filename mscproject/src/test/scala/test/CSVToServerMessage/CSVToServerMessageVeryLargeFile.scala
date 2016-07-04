@@ -42,7 +42,6 @@ class CSVToServerMessageVeryLargeFile extends FunSuite {
     val di = new DataItem("Date", "1999-01-04")
     assert(lastServerMessage.data(0).equals(di))
   }
-  
   test("Middle DataItem in the Last ServerMessage built by the CSVReader should equal di") {
     val di = new DataItem("IBM", "183.0")
     assert(lastServerMessage.data.contains(di))
@@ -66,8 +65,6 @@ class CSVToServerMessageVeryLargeFile extends FunSuite {
    */
   test("Null values in data should equal \"null\"") {
     val di = new DataItem("GS", "null")
-    println(di.value.getClass)
-    println(lastServerMessage.data(12))
     assert(lastServerMessage.data(12).equals(di))
   }
 }
