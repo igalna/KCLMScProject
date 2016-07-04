@@ -14,7 +14,7 @@ import scala.annotation.tailrec
 
 class GameServerWithCSV extends FunSuite {
   
-  val fileName = "C:\\Users\\igaln\\Documents\\King's stuff\\King's MSc project\\Data\\Trading\\testfile.csv"
+  val fileName = "C:\\Users\\igaln\\Documents\\King's stuff\\King's MSc project\\Data\\Trading\\test data\\testfile.csv"
   val bufferedSource = io.Source.fromFile(fileName)
   val serverName:String = "myServer"
   val serverLocation:String = "localhost"

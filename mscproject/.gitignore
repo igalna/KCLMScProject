@@ -48,6 +48,7 @@
 *resolved.xml.properties
 *succeeded_tests
 
+
 # OS generated files #
 ######################
 .DS_Store
