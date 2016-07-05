@@ -13,5 +13,6 @@ lazy val root = (project in file(".")).
 	libraryDependencies += "com.softwaremill.macwire" %% "proxy" % "2.2.3",
 	libraryDependencies += "com.typesafe.play" % "play-json_2.11" % "2.4.6",
 	libraryDependencies += "io.spray" %%  "spray-json" % "1.3.2",
-	libraryDependencies += "io.spray" % "spray-httpx_2.11" % "1.3.3"
+	libraryDependencies += "io.spray" % "spray-httpx_2.11" % "1.3.3",
+	libraryDependencies += "com.datastax.cassandra" % "cassandra-driver-core" % "3.0.0"
 )
