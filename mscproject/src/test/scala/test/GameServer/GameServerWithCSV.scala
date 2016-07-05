@@ -5,17 +5,18 @@ import org.scalatest.FunSuite
 import org.scalatest.Matchers._
 import com.softwaremill.macwire._
 import main.DataConverter.CSVToServerMessage
-import main.Players.PlayerImpl
 import main.traits.Player
 import main.traits.ServerMessage
 import main.GameServer.GameServer
 import main.traits.Message
 import scala.annotation.tailrec
+import scala.io.Source._
+import main.Players.RandomSimpleBuyActionPlayer
 
 class GameServerWithCSV extends FunSuite {
   
   val fileName = "C:\\Users\\igaln\\Documents\\King's stuff\\King's MSc project\\Data\\Trading\\test data\\testfile.csv"
-  val bufferedSource = io.Source.fromFile(fileName)
+  val bufferedSource = scala.io.Source.fromFile(fileName)
   val serverName:String = "myServer"
   val serverLocation:String = "localhost"
   
@@ -27,10 +28,10 @@ class GameServerWithCSV extends FunSuite {
   val serverMessages:List[ServerMessage] = csvReader.buildList
   
 
-  val p1:Player = new PlayerImpl(java.util.UUID.randomUUID())
-  val p2:Player = new PlayerImpl(java.util.UUID.randomUUID())
-  val p3:Player = new PlayerImpl(java.util.UUID.randomUUID())
-  val p4:Player = new PlayerImpl(java.util.UUID.randomUUID())
+  val p1:Player = new RandomSimpleBuyActionPlayer(java.util.UUID.randomUUID())
+  val p2:Player = new RandomSimpleBuyActionPlayer(java.util.UUID.randomUUID())
+  val p3:Player = new RandomSimpleBuyActionPlayer(java.util.UUID.randomUUID())
+  val p4:Player = new RandomSimpleBuyActionPlayer(java.util.UUID.randomUUID())
   val playerList: List[Player] = List(p1, p2, p3, p4)
   
   val gs = wire[GameServer]

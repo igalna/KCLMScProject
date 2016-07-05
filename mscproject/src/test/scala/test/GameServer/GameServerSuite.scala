@@ -1,7 +1,6 @@
 package test.GameServer
 
 import org.scalatest.FunSuite
-import main.Players.PlayerImpl
 import main.traits.Player
 import main.GameServer.GameServer
 import com.softwaremill.macwire._
@@ -10,6 +9,7 @@ import main.traits.Message
 import main.traits.ServerMessage
 import play.api.libs.json.{JsNull,Json,JsString,JsValue}
 import main.traits.DataItem
+import main.Players.RandomSimpleBuyActionPlayer
 
 class GameServerSuite extends FunSuite{
   
@@ -17,10 +17,10 @@ class GameServerSuite extends FunSuite{
   val serverLocation = "localhost"
  
   val dummyUuid: UUID = java.util.UUID.randomUUID()
-  val p1:Player = wire[PlayerImpl]
-  val p2:Player = wire[PlayerImpl]
-  val p3:Player = wire[PlayerImpl]
-  val p4:Player = wire[PlayerImpl]
+  val p1:Player = wire[RandomSimpleBuyActionPlayer]
+  val p2:Player = wire[RandomSimpleBuyActionPlayer]
+  val p3:Player = wire[RandomSimpleBuyActionPlayer]
+  val p4:Player = wire[RandomSimpleBuyActionPlayer]
   val playerList: List[Player] = List(p1, p2, p3, p4)
   
   val di1: DataItem = new DataItem("MMM", "432")

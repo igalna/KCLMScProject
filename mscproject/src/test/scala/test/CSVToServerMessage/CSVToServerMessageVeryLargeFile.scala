@@ -4,7 +4,6 @@ import org.scalatest.FunSuite
 import main.traits.ServerMessage
 import main.traits.Player
 import main.GameServer.GameServer
-import main.Players.PlayerImpl
 import main.DataConverter.CSVToServerMessage
 import com.softwaremill.macwire._
 import main.traits.DataItem
@@ -12,7 +11,7 @@ import main.traits.DataItem
 class CSVToServerMessageVeryLargeFile extends FunSuite {
   
   val fileName = "C:\\Users\\igaln\\Documents\\King's stuff\\King's MSc project\\Data\\Trading\\test data\\veryLargeTestFile.csv"
-  val bufferedSource = io.Source.fromFile(fileName)
+  val bufferedSource = scala.io.Source.fromFile(fileName)
   val serverName:String = "myServer"
   val serverLocation:String = "localhost"
   

@@ -8,7 +8,7 @@ import main.traits.DataItem
 class CSVToServerMessageLargeFileSuite extends FunSuite {
   
   val fileName = "C:\\Users\\igaln\\Documents\\King's stuff\\King's MSc project\\Data\\Trading\\test data\\largeTestFile.csv"
-  val bufferedSource = io.Source.fromFile(fileName)
+  val bufferedSource = scala.io.Source.fromFile(fileName)
   
   val serverName:String = "myServer"
   val serverLocation:String = "localhost"

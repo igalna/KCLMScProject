@@ -16,7 +16,8 @@ class GameServer(val players: List[Player],val data: List[Message]) {
       data match {
         case x :: tail => 
           players.par.foreach 
-            { x => x.receiveMsgFromServer(data.head) }
+            { x => x.receiveMsgFromServer(data.head) 
+                   x.action}
             println("GameServer Waiting")
             Thread.sleep(5000)
             iterate(tail)
