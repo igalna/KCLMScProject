@@ -41,7 +41,7 @@ class RandomSimpleBuyActionPlayerActionSuite extends FlatSpec {
     val selectedData: DataItem = player.action.asInstanceOf[SimpleBuyAction].dataItem
     assert(serverMessages(3).data.contains(selectedData))
   }
-  it should "A Player should not select the DataItem from the Data/Time column" in {
+  it should "A Player should NOT EVER select the DataItem from the Data/Time column" in {
     val di = new DataItem("Date", "06/06/2016")
     assert(!player.action.equals(di))
   }
