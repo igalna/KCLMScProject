@@ -11,7 +11,6 @@ import main.traits.PlayerMessage
 import main.traits.DataItem
 import main.traits.Action
 import main.traits.SimpleBuyAction
-import akka.event.Logging
 
 class RandomSimpleBuyActionPlayer(val playerId: UUID) extends Player {
   
