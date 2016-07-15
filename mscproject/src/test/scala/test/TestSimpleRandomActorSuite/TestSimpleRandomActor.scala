@@ -16,10 +16,12 @@ import akka.testkit.ImplicitSender
 import akka.testkit.TestKit
 import akka.testkit.TestProbe
 import akka.util.Timeout
+
 import main.Actors.SimpleRandomActor
 import main.Actors.SimpleRandomActor._
 import main.DataConverter.CSVToServerMessage
 import main.traits.ServerMessage
+import main.traits.ActorMessage._
 
 class TestSimpleRandomActor extends TestKit(ActorSystem("MySpec")) 
   with ImplicitSender with WordSpecLike with Matchers
@@ -49,7 +51,6 @@ class TestSimpleRandomActor extends TestKit(ActorSystem("MySpec"))
   
   "A SimpleRandomActor Actor" must {
     val actor = system.actorOf(SimpleRandomActor.props)
-    
     "be able to add children to it's routes" in {
       actor ! AddChild("FirstChild")
       expectMsg("FirstChild")

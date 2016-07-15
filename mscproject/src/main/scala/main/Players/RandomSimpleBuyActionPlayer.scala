@@ -28,10 +28,10 @@ class RandomSimpleBuyActionPlayer(val playerId: UUID) extends Player {
     widthOfServerMessageData = msg.asInstanceOf[ServerMessage].data.length-1
     println("Player: " + playerId + " received data: " + msg)
   }
-  @Override
-  def getReceivedData = receivedData.toList
-  @Override
-  def action: Action = {
+  
+  override def getReceivedData = receivedData.toList
+  
+  override def action: Action = {
     val currentMsg = receivedData(counter)
     currentMsg match {
       case ServerMessage(_,_,_) => counter +=1

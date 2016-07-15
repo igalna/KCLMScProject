@@ -5,15 +5,8 @@ import akka.actor.ActorLogging
 import akka.actor.ActorRef
 import akka.actor.Props
 import main.traits.DataItem
-import akka.routing.RoundRobinGroup
-import akka.routing.Router
+import main.traits.ActorMessage._
 import scala.collection.mutable.ArrayBuffer
-import akka.routing.BroadcastGroup
-import akka.routing.RoundRobinGroup
-import akka.routing.ActorRefRoutee
-import akka.routing.RoundRobinRoutingLogic
-import akka.actor.PoisonPill
-import akka.actor.Kill
 
 
 class SimpleRandomActor extends Actor with ActorLogging {
@@ -21,9 +14,6 @@ class SimpleRandomActor extends Actor with ActorLogging {
   
   private var numberOfDataItems: Int = _
   private var routeePaths: ArrayBuffer[String] = ArrayBuffer.empty
-  
-  private var router = 
-    context.actorOf(BroadcastGroup(routeePaths.toList).props())
   
   def receive = {
     case AddChild(name)    => val actor = context.actorOf(SimpleRandomActor.props, name)
@@ -45,14 +35,5 @@ class SimpleRandomActor extends Actor with ActorLogging {
 }
 
 object SimpleRandomActor {
-  
   def props: Props = Props(classOf[SimpleRandomActor])
-  
-  final case class DataSet(data: List[DataItem])
-  final case class SingleAction(di: DataItem)
-  final case class SuccessfulAction()
-  final case class UnsuccessfulAction()
-  final case class AddChild(name: String)
-  final case class RemoveChild(name: String)
-  final case object GetRoutees
 }
