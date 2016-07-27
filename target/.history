@@ -1,0 +1,10 @@
+test-only * GameServerWithCSV
+test-only *GameServerWithCSV
+test- only *GameServerWithCSV
+test -only *GameServerWithCSV
+test-only *GameServerWithCSV
+sbt update
+update
+run
+test
+exit

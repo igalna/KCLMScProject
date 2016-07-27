@@ -16,5 +16,22 @@ lazy val root = (project in file(".")).
 	libraryDependencies += "com.typesafe.play" % "play-json_2.11" % "2.4.6",
 	libraryDependencies += "io.spray" %%  "spray-json" % "1.3.2",
 	libraryDependencies += "io.spray" % "spray-httpx_2.11" % "1.3.3",
-	libraryDependencies += "com.datastax.cassandra" % "cassandra-driver-core" % "3.0.0"
+	libraryDependencies += "com.datastax.cassandra" % "cassandra-driver-core" % "3.0.0",
+	libraryDependencies += "org.deeplearning4j" % "deeplearning4j-core" % "0.4-rc3.9",
+	libraryDependencies += "org.nd4j" % "nd4j-native" % "0.4-rc3.9" classifier "" classifier "windows-x86_64",
+	libraryDependencies += "org.datavec" % "datavec-api" % "0.4.0",
+	libraryDependencies += "org.sameersingh.scalaplot" % "scalaplot" % "0.0.4",
+	libraryDependencies ++= Seq(
+	  "commons-io" % "commons-io" % "2.4",
+	  "com.google.guava" % "guava" % "19.0",
+	  "jfree" % "jfreechart" % "1.0.13",
+	  "org.deeplearning4j" % "deeplearning4j-core" % "0.4-rc3.9",
+	  "org.deeplearning4j" % "deeplearning4j-nlp" % "0.4-rc3.9",
+	  "org.deeplearning4j" % "deeplearning4j-ui" % "0.4-rc3.9",
+	  "org.jblas" % "jblas" % "1.2.4",
+	  "org.nd4j" % "canova-nd4j-codec" % "0.0.0.15",
+	  "org.nd4j" % "nd4j-native" % "0.4-rc3.9",
+	  "org.bytedeco" % "javacv" % "1.2",
+  	  "org.bytedeco" % "javacpp" % "1.2"
+  	)
 )
