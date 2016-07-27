@@ -14,9 +14,9 @@ class LoadingDataFromCSVToIND {
   var WIDTH = 0
   lazy val SIZE_OF_DATA = dataFromFile.size
   
-  var optimalAtTimeStep: ListBuffer[Double] = new ListBuffer
-  var indexOfOptimalAtTimeStep: ListBuffer[Int] = new ListBuffer
-  var arraysOfDifferences: ListBuffer[Array[Double]] = new ListBuffer
+  lazy val optimalAtTimeStep: ListBuffer[Double] = new ListBuffer
+  lazy val indexOfOptimalAtTimeStep: ListBuffer[Int] = new ListBuffer
+  lazy val arraysOfDifferences: ListBuffer[Array[Double]] = new ListBuffer
   
   /**
    * Returns a DataSet from a CSV file name passed to it
