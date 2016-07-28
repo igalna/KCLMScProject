@@ -44,6 +44,10 @@ class LoadingDataFromCSVToIND {
       dataFromFile += lineData
     }
     
+    getDataSetFromListBuffer(dataFromFile)
+  }
+  
+  def getDataSetFromListBuffer(buff: ListBuffer[Array[Double]]): DataSet = {
     val input: INDArray = Nd4j.zeros(dataFromFile.size-1, WIDTH)
     val label: INDArray = Nd4j.zeros(dataFromFile.size-1, WIDTH)
 
@@ -71,5 +75,5 @@ class LoadingDataFromCSVToIND {
     }
     val dataSet: DataSet = new DataSet(input, label)
     return dataSet
-  } 
+  }
 }

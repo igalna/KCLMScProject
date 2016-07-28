@@ -33,6 +33,8 @@ import org.datavec.api.records.reader.SequenceRecordReader
 import org.datavec.api.split.InputSplit
 import org.datavec.api.writable.Writable
 import org.datavec.api.records.reader.impl.collection.CollectionSequenceRecordReader
+import scala.collection.mutable.ListBuffer
+import scala.util.Random
 
 
 object TimeSeries {
@@ -55,10 +57,10 @@ object TimeSeries {
     val testData = dataLoader.getDataSetFromCSV(folderPath + smallCurrencies)
     var testIter = testData.iterator()
 
-    while(testIter.hasNext()) {
-      val next = testIter.next()
-      println(next.outcome())
-    }
+//    while(testIter.hasNext()) {
+//      val next = testIter.next()
+//      println(next.outcome())
+//    }
     
     val size = dataLoader.SIZE_OF_DATA
     val numOutputs = dataLoader.WIDTH
@@ -103,6 +105,42 @@ object TimeSeries {
       
     val net: MultiLayerNetwork = new MultiLayerNetwork(conf)
     net.fit(trainingData)
+    
+//    var list: ListBuffer[Array[Double]] = new ListBuffer
+//    var anotherList: ListBuffer[Array[Double]] = new ListBuffer
+//    
+//    val array = Array(1.2, 3.2, 5.4)
+//    val array1 = Array(10.4, 30.1, 2.9)
+//    anotherList += array
+//    anotherList += array1
+//        
+//    val array2 = Array(332.0, 232.0)
+//    list += array2
+//    println(list.foreach { x => println(x.foreach { y => print(y + " , ") } )})
+//    
+//    list.prependAll(anotherList)
+//    println(list.foreach { x => println(x.foreach { y => print(y + " , ") } )})
+
+    val rnd = new Random
+    val random = rnd.nextDouble()
+    println(random)
+    
+    val array = Array(1.2, 3.2, 5.4, 100)
+    val range = 2.0
+    
+    array.foreach { x => print(x + " , ") }
+    println()
+    for (doub <- array) {
+      val minRange = doub - range
+      val maxRange = doub + range
+      val randomInRange = (minRange + (maxRange - minRange) * random)
+      print(randomInRange + " , ")
+    }
+    println()
+    val num = 20
+    val randomValue = (num - range) + ((num + range) - (num - range)) * random
+    
+    //println(randomValue)
     
 //    (0 until 5).foreach { x => 
 //        net.fit(trainingData) 
