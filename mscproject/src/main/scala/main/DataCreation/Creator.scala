@@ -15,6 +15,9 @@ class Creator {
   def addDataToKnownData(arr: Array[Double]) = {
     currentlyKnownData += arr
   }
+  def removeDataFromKnownData = {
+    currentlyKnownData.remove(0)
+  }
   def setRangeToCreateDataFromWithin(range: Double) = {
     rangeToCreateDataFromWithin = range
   }
@@ -50,6 +53,6 @@ class Creator {
       counter += 1
     }
     createdData.prependAll(currentlyKnownData)
-    createdData
+    return createdData
   }
 }

@@ -137,20 +137,20 @@ class TestDrawingGraphs extends FlatSpec{
     
     val y = (1 until optimal.length+1).map { _.toDouble }
     
-    val a = new NamedSequence("Predicted", pre)
-    val b = new NamedSequence("Average", avg)
-    val c = new NamedSequence("Optimal", optimal)
-    dg.drawGraphFromSequences(List(a, b, c))
+//    val a = new NamedSequence("Predicted", pre)
+//    val b = new NamedSequence("Average", avg)
+//    val c = new NamedSequence("Optimal", optimal)
+//    dg.drawGraphFromSequences(List(a, b, c))
   
     "A graph Drawer" should " draw graphs with two sequence" in {
       val a = new NamedSequence("Predicted", predictedAsPercentageOfOptimal)
       val b = new NamedSequence("Average", averageAsPercentageOfOptimal)
-      dg.drawGraphFromSequences(List(a, b))
+      dg.drawGraphFromSequences("Two sequence graph",List(a, b))
     }
     it should " draw graphs with three sequences" in {
       val a = new NamedSequence("Predicted", pre)
       val b = new NamedSequence("Average", avg)
       val c = new NamedSequence("Optimal", optimal)
-      dg.drawGraphFromSequences(List(a, b, c))
+      dg.drawGraphFromSequences("Three sequence graph", List(a, b, c))
     }
 }

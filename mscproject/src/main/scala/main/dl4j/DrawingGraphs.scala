@@ -48,15 +48,17 @@ import org.datavec.api.records.reader.impl.collection.CollectionSequenceRecordRe
 
   
 class DrawingGraphs {
-  def drawGraphFromSequences(sequences: List[NamedSequence]) {
+  
+  def drawGraphFromSequences(title: String, sequences: List[NamedSequence]) {
     val size = sequences.size
     size match {
-      case 2 => drawGraphFromSequences(sequences(0), sequences(1))
-      case 3 => drawGraphFromSequences(sequences(0), sequences(1), sequences(2))
+      case 2 => drawGraphFromSequences(title, sequences(0), sequences(1))
+      case 3 => drawGraphFromSequences(title, sequences(0), sequences(1), sequences(2))
+      case 4 => drawGraphFromSequences(title, sequences(0), sequences(1), sequences(2), sequences(3))
     }
   }
-  private def drawGraphFromSequences(seq1: NamedSequence, seq2: NamedSequence) = {
-    val y = (1 until seq1.seq.length+1).map { _.toDouble }
+  private def drawGraphFromSequences(title: String, seq1: NamedSequence, seq2: NamedSequence) = {
+    val y = (1 until seq1.seq.size+1).map { _.toDouble }
     output(GUI,
     xyChart(y -> Seq(
                      Y(seq1.seq, seq1.name, 
@@ -65,12 +67,13 @@ class DrawingGraphs {
                      Y(seq2.seq, seq2.name, 
                          style = XYPlotStyle.LinesPoints,
                          color = Color.Mustard))
+        ,title = title
         ,showLegend = true
         ,x = Axis(label = "Time Step")
         ,y = Axis(label = "Fluctuation")))
   }
-  private def drawGraphFromSequences(seq1: NamedSequence, seq2: NamedSequence, seq3: NamedSequence) = {
-    val y = (1 until seq1.seq.length+1).map { _.toDouble }
+  private def drawGraphFromSequences(title: String, seq1: NamedSequence, seq2: NamedSequence, seq3: NamedSequence) = {
+    val y = (1 until seq1.seq.size+1).map { _.toDouble }
     output(GUI,
     xyChart(y -> Seq(
                      Y(seq1.seq, seq1.name, 
@@ -82,10 +85,33 @@ class DrawingGraphs {
                      Y(seq3.seq, seq3.name, 
                          style = XYPlotStyle.LinesPoints,
                          color = Color.Blue))
+        , title = title
         ,showLegend = true
         ,x = Axis(label = "Time Step")
         ,y = Axis(label = "Fluctuation")))
   }
+  private def drawGraphFromSequences(title: String, seq1: NamedSequence, seq2: NamedSequence, seq3: NamedSequence, seq4: NamedSequence) = {
+    val y = (1 until seq1.seq.size+1).map { _.toDouble }
+    output(GUI,
+    xyChart(y -> Seq(
+                     Y(seq1.seq, seq1.name, 
+                         style = XYPlotStyle.LinesPoints,
+                         color = Color.Red),
+                     Y(seq2.seq, seq2.name, 
+                         style = XYPlotStyle.LinesPoints,
+                         color = Color.Mustard),
+                     Y(seq3.seq, seq3.name, 
+                         style = XYPlotStyle.LinesPoints,
+                         color = Color.Blue),
+                     Y(seq4.seq, seq4.name, 
+                         style = XYPlotStyle.LinesPoints,
+                         color = Color.Purple))
+        , title = title
+        ,showLegend = true
+        ,x = Axis(label = "Time Step")
+        ,y = Axis(label = "Fluctuation")))
+  }
+  
   def sequenceAsPercentageOfAnother(seq: Seq[Double], optimal: Seq[Double] ): Seq[Double] = {
     val zipped = seq.zip(optimal)
     val asPercentageOf = zipped.map( x => x._1 * 100 / x._2)

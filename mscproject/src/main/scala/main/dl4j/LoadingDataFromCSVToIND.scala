@@ -44,10 +44,10 @@ class LoadingDataFromCSVToIND {
       dataFromFile += lineData
     }
     
-    getDataSetFromListBuffer(dataFromFile)
+    getDataSetFromListBuffer
   }
   
-  def getDataSetFromListBuffer(buff: ListBuffer[Array[Double]]): DataSet = {
+  private def getDataSetFromListBuffer: DataSet = {
     val input: INDArray = Nd4j.zeros(dataFromFile.size-1, WIDTH)
     val label: INDArray = Nd4j.zeros(dataFromFile.size-1, WIDTH)
 
@@ -63,6 +63,33 @@ class LoadingDataFromCSVToIND {
         optimalAtTimeStep += greatest
         val index = diff.indexOf(greatest)
         indexOfOptimalAtTimeStep += index
+        
+        var internalCounter = 0
+        for (number <- firstRow) {
+          input.putScalar(counter, internalCounter, number)
+          label.putScalar(counter, index, 1)
+          internalCounter += 1
+        }
+      }
+      counter += 1
+    }
+    val dataSet: DataSet = new DataSet(input, label)
+    return dataSet
+  }
+  
+  def getDataSetFromListBuffer(buff: ListBuffer[Array[Double]]): DataSet = {
+    val input: INDArray = Nd4j.zeros(buff.size-1, WIDTH)
+    val label: INDArray = Nd4j.zeros(buff.size-1, WIDTH)
+
+    var counter = 0
+    for (row <- buff) {
+      
+      if (counter < buff.size -1) {
+        val firstRow = buff(counter)
+        val secondRow = buff(counter+1)
+        val diff = (firstRow zip secondRow).map { x => Math.abs(x._1 - x._2) }
+        val greatest = diff.max
+        val index = diff.indexOf(greatest)
         
         var internalCounter = 0
         for (number <- firstRow) {
