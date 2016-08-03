@@ -27,10 +27,13 @@ object NNWithChangingTestData {
     val smallCurrencies = "currenciesSmallEarliestToLatest.csv"
     val currenciesTestFileName = "currenciesEarliestToLatest.csv"
     
+    val stocksThenCurrencies = "stocksThenCurrencies.csv"
+    val currenciesThenStocks = "currenciesThenStocks.csv"
+    
     val dataLoader = new LoadingDataFromCSVToIND
     val dg = new DrawingGraphs
     
-    val test = dataLoader.getDataSetFromCSV(folderPath + smallStocks)
+    val test = dataLoader.getDataSetFromCSV(folderPath + stocksThenCurrencies)
     val testData = dataLoader.dataFromFile
     var testIter = test.iterator()
     

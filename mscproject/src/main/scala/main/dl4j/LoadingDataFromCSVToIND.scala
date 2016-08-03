@@ -7,6 +7,8 @@ import org.nd4j.linalg.factory.Nd4j
 import org.nd4j.linalg.dataset.DataSet
 import org.deeplearning4j.datasets.iterator.DataSetIterator
 import org.deeplearning4j.datasets.canova.RecordReaderDataSetIterator
+import scala.io.BufferedSource
+import java.io.PrintWriter
 
 class LoadingDataFromCSVToIND {
   
@@ -45,6 +47,41 @@ class LoadingDataFromCSVToIND {
     }
     
     getDataSetFromListBuffer
+  }
+  
+  def getDataFromMultipleCSV(listOfCSV: List[String], blockSize: Int, destination: String) = {
+    val listOfSources = listOfCSV.map { x => 
+                                scala.io.Source.fromFile(x)
+                                .getLines()
+                                .drop(1)}
+    
+    
+    var lb: Array[ListBuffer[Array[Double]]] = new Array(listOfSources.size)
+    var counter = 0
+    for (iter <- listOfSources) {
+      var data: ListBuffer[Array[Double]] = new ListBuffer
+      while (iter.hasNext) {
+        val next = iter.next().split(",").map(_.trim)
+        val arr: Array[Double] = new Array(next.length)
+        var internalCounter = 0
+        for (str <- next) {
+          arr(internalCounter) = str.toDouble
+          internalCounter += 1
+        }
+        data += arr
+      }
+      lb(counter) = data
+      counter +=1
+    }
+    
+    val dest = "C:/Users/igaln/Documents/King's stuff/King's MSc project/Data/Trading/test data/dl4j/test.csv"
+    val writer: PrintWriter = new PrintWriter(dest)
+    
+    counter = 0
+    var currentList: ListBuffer[Array[Double]] = lb(counter)
+    
+    (0 until blockSize).foreach { x => ??? }
+    
   }
   
   private def getDataSetFromListBuffer: DataSet = {
