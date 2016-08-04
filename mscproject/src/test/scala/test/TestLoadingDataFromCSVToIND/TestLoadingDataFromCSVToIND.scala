@@ -13,7 +13,7 @@ class TestLoadingDataFromCSVToIND extends FlatSpec{
   
   val listOfEqualLengthCSV = List((folderPath + smallCurrencies), (folderPath + smallCurrencies))
   val listOfUnequalLengthCSV = List((folderPath + smallCurrencies), (folderPath + smallStocks))
-  val blockSize = 5
+  val blockSize = 30
   val destination = folderPath + "test.csv"
   val unequalDestination = folderPath + "unequalLengthTest.csv"
   

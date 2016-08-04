@@ -84,7 +84,7 @@ class LoadingDataFromCSVToIND {
     counter = 0
     var increment = counter + blockSize
     var currentList: ListBuffer[Array[Double]] = lb(choice)
-    while (counter <= biggest) {
+    while (counter < biggest) {
       for (list <- lb) {
         println("Choice :" + choice)
         println("Counter : " + counter)
@@ -100,11 +100,6 @@ class LoadingDataFromCSVToIND {
                                     l.foreach { y =>
                                          writer.append(y)
                                          writer.append(",")}
-//                                    writer.append(
-//                                      line
-//                                        .map { y => 
-//                                        y.toChar })
-//                                    writer.append(",")}
                                   }
                                   writer.append("\n")
                                 }
@@ -116,9 +111,22 @@ class LoadingDataFromCSVToIND {
         counter = increment
         increment += blockSize
         if (increment >= smallest) {
-          println("HERE")
+          for (list <- lb) {
+            val listSize = list.size
+            (counter until listSize).foreach { x =>
+                                   val line = if(list(x) == null) null else list(x)
+                                   if (line != null) {
+                                    val l = line.map { y =>
+                                         y.toString() }
+                                    l.foreach { y =>
+                                         writer.append(y)
+                                         writer.append(",")}
+                                  }
+                                  writer.append("\n") 
+                                }
+          }
           increment = smallest
-          counter = biggest+1
+          counter = biggest
         }
       }
     }
