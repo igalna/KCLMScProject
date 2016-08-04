@@ -74,14 +74,55 @@ class LoadingDataFromCSVToIND {
       counter +=1
     }
     
-    val dest = "C:/Users/igaln/Documents/King's stuff/King's MSc project/Data/Trading/test data/dl4j/test.csv"
+    val dest = destination
     val writer: PrintWriter = new PrintWriter(dest)
     
+    val biggest = lb.map { x => x.size }.max
+    val smallest = lb.map { x => x.size }.min
+    
+    var choice = 0
     counter = 0
-    var currentList: ListBuffer[Array[Double]] = lb(counter)
-    
-    (0 until blockSize).foreach { x => ??? }
-    
+    var increment = counter + blockSize
+    var currentList: ListBuffer[Array[Double]] = lb(choice)
+    while (counter <= biggest) {
+      for (list <- lb) {
+        println("Choice :" + choice)
+        println("Counter : " + counter)
+        println("Increment : " + increment)
+        println("lb size : " + lb.size)
+        println("Biggest : " + biggest)
+        println("Smallest : " + smallest)
+        (counter until increment).foreach { x => 
+                                  val line = if(list(x) == null) null else list(x)
+                                  if (line != null) {
+                                    val l = line.map { y =>
+                                         y.toString() }
+                                    l.foreach { y =>
+                                         writer.append(y)
+                                         writer.append(",")}
+//                                    writer.append(
+//                                      line
+//                                        .map { y => 
+//                                        y.toChar })
+//                                    writer.append(",")}
+                                  }
+                                  writer.append("\n")
+                                }
+      }
+      choice += 1
+      
+      if (choice == lb.size-1) {
+        choice = 0
+        counter = increment
+        increment += blockSize
+        if (increment >= smallest) {
+          println("HERE")
+          increment = smallest
+          counter = biggest+1
+        }
+      }
+    }
+    writer.close()
   }
   
   private def getDataSetFromListBuffer: DataSet = {
