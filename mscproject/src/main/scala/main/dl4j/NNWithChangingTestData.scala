@@ -33,7 +33,9 @@ object NNWithChangingTestData {
     val dataLoader = new LoadingDataFromCSVToIND
     val dg = new DrawingGraphs
     
-    val test = dataLoader.getDataSetFromCSV(folderPath + stocksThenCurrencies)
+    val unequal = folderPath + "unequalLengthTest.csv"
+        
+    val test = dataLoader.getDataSetFromCSV(folderPath + smallStocks)
     val testData = dataLoader.dataFromFile
     var testIter = test.iterator()
     
@@ -78,7 +80,7 @@ object NNWithChangingTestData {
     val creatorNet: MultiLayerNetwork = new MultiLayerNetwork(conf)
     
     val creator: Creator = new Creator
-    creator.setNumberOfDataItemsToCreate(500)
+    creator.setNumberOfDataItemsToCreate(200)
     creator.setRangeToCreateDataFromWithin(1.5)
     
     var outcomeList: ListBuffer[Int] = new ListBuffer
@@ -93,6 +95,8 @@ object NNWithChangingTestData {
     while (testIter.hasNext()) {
       val t: DataSet = testIter.next()
       val row = testData(counter)
+      println("numOutputs : " + numOutputs)
+      println("row length : " + row.length)
       println("Test iteration : " + counter)
       counter += 1
       
@@ -108,10 +112,10 @@ object NNWithChangingTestData {
         val trainWith = dataLoader.getDataSetFromListBuffer(trainingData)
         val creatorTrainWith = dataLoader.getDataSetFromListBuffer(
                                creator.createDataFromAverageOfEachItem)
-        //(0 until 20).foreach {_ => net.fit(trainWith)
-        //                          creatorNet.fit(creatorTrainWith)}
-        net.fit(trainWith)
-        creatorNet.fit(creatorTrainWith)
+        (0 until 20).foreach {_ => net.fit(trainWith)
+                                   creatorNet.fit(creatorTrainWith)}
+        //net.fit(trainWith)
+        //creatorNet.fit(creatorTrainWith)
         if (trainingData.size > 30) {
           trainingData.remove(0)
           creator.removeDataFromKnownData

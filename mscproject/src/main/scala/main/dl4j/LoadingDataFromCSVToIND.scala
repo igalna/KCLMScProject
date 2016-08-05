@@ -51,14 +51,13 @@ class LoadingDataFromCSVToIND {
   
   def getDataFromMultipleCSV(listOfCSV: List[String], blockSize: Int, destination: String) = {
     val listOfSources = listOfCSV.map { x => 
-                                scala.io.Source.fromFile(x)
-                                .getLines()
-                                .drop(1)}
+                                scala.io.Source.fromFile(x) }
     
+    val listOfBuffers = listOfSources.mapConserve { x => x.getLines().drop(1) }.asInstanceOf[List[Iterator[String]]]
     
-    var lb: Array[ListBuffer[Array[Double]]] = new Array(listOfSources.size)
+    var lb: Array[ListBuffer[Array[Double]]] = new Array(listOfBuffers.size)
     var counter = 0
-    for (iter <- listOfSources) {
+    for (iter <- listOfBuffers) {
       var data: ListBuffer[Array[Double]] = new ListBuffer
       while (iter.hasNext) {
         val next = iter.next().split(",").map(_.trim)
@@ -131,6 +130,7 @@ class LoadingDataFromCSVToIND {
       }
     }
     writer.close()
+    listOfSources.foreach { x => x.close() }
   }
   
   private def getDataSetFromListBuffer: DataSet = {
