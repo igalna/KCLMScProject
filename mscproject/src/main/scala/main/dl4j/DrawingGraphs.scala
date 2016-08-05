@@ -79,6 +79,10 @@ class DrawingGraphs {
                                                     seq2: NamedSequence, 
                                                     seq3: NamedSequence) = {
     val y = (1 until seq1.seq.size+1).map { _.toDouble }
+    println("inside drawing graphs 3")
+    println("sequence 1 size : " + seq1.seq.size)
+    println("sequence 2 size : " + seq2.seq.size)
+    println("sequence 3 size : " + seq3.seq.size)
     output(GUI,
     xyChart(y -> Seq(
                      Y(seq1.seq, seq1.name, 
@@ -94,6 +98,7 @@ class DrawingGraphs {
         ,showLegend = true
         ,x = Axis(label = "Time Step")
         ,y = Axis(label = "Fluctuation")))
+    println("outside drawing graphs 3")
   }
   private def drawGraphFromSequences(title: String, seq1: NamedSequence,
                                                     seq2: NamedSequence, 

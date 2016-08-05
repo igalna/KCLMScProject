@@ -18,28 +18,23 @@ class Runner(val dataLoader: LoadingDataFromCSVToIND, val graphDrawer: DrawingGr
   val numOutputs = dataLoader.WIDTH
   
   def setEntities(newEntities: List[Entity]) = {
-    println("Inside setEntities")
     this.entities = newEntities
   }
   
   def run = {
-    println("Inside Run")
     var first = true
     var counter = 0
     
     while (testIter.hasNext()) {
-      println("Here")
       val t: DataSet = testIter.next()
       val row = comparisonData(counter)
       counter +=1
-      println("Training Data size : " + comparisonData.size)
       if (first) {
-        entities.par.foreach { x => x.receive(t ,row) }
+        entities.foreach { x => x.receive(t ,row) }
         first = false
       }
       else {
-        println("now HEre")
-        entities.par.foreach { x => x.receive(t, row) }
+        entities.foreach { x => x.receive(t, row) }
       }
     }
     val optimal = dataLoader.optimalAtTimeStep
@@ -49,7 +44,7 @@ class Runner(val dataLoader: LoadingDataFromCSVToIND, val graphDrawer: DrawingGr
     counter = 0
     var meanValues: ListBuffer[Double] = new ListBuffer
     var medianValues: ListBuffer[Double] = new ListBuffer
-    var arrayOfNamedSequences: Array[NamedSequence] = new Array(entities.size +2)
+    var arrayOfNamedSequences: Array[NamedSequence] = new Array(entities.size +3)
     for (x <- entities) {
       var predictionValues: ListBuffer[Double] = new ListBuffer
       var internalCounter = 0
@@ -57,7 +52,7 @@ class Runner(val dataLoader: LoadingDataFromCSVToIND, val graphDrawer: DrawingGr
       for (out <- outcomes) {
         val diff = differences(internalCounter)(out)
         predictionValues += diff
-        if (internalCounter == 0) {
+        if (counter == 0) {
           val mean = differences(internalCounter).sum / differences(internalCounter).length
           val median = differences(internalCounter).sortWith(_ < _)(differences.size/2)
           meanValues += mean
@@ -72,14 +67,14 @@ class Runner(val dataLoader: LoadingDataFromCSVToIND, val graphDrawer: DrawingGr
     val meanNamedSequence = new NamedSequence("Mean", meanValues)
     val medianNamedSequence = new NamedSequence("Median", medianValues)
     arrayOfNamedSequences(counter) = meanNamedSequence
-    arrayOfNamedSequences(counter+1) = medianNamedSequence
+    arrayOfNamedSequences(counter+ 1) = medianNamedSequence
     
     val optimalNamedSequence = new NamedSequence("Optimal", optimal.take(optimal.length-1))
+    arrayOfNamedSequences(counter + 2) = optimalNamedSequence
     
     printStats(arrayOfNamedSequences, optimalNamedSequence, indexOfOptimal)
-    println("just before drawing Graphs")
-    graphDrawer.drawGraphFromSequences("Predicted", arrayOfNamedSequences.toList)
-    println("just after drawing graphs")
+    val list = arrayOfNamedSequences.toList
+    graphDrawer.drawGraphFromSequences("Predicted", list)
   }
   
   private def printStats(arr: Array[NamedSequence], opt: NamedSequence, inx: Seq[Int]) = {

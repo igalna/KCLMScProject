@@ -29,17 +29,12 @@ class NNEntity(val name: String,
       first = false
     }
     else {
-      println("Inside Entity")
       trainingData += arr
-      println("training data Size : " + trainingData.size)
-      println("arr length : " + arr.length)
-      println("data loader width : " + dataLoader.WIDTH)
       val trainWith = dataLoader.getDataSetFromListBuffer(trainingData)
       (0 until iterations).foreach { x => net.fit(trainWith) }
       if (trainingData.size > historyToKeep) {
         trainingData.remove(0)
       }
-      println("after training")
       val features: INDArray = t.getFeatureMatrix()
       val labels: INDArray = t.getLabels()
       

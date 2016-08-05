@@ -30,7 +30,7 @@ class TestRunner extends FlatSpec {
   val numOutputs = runner.numOutputs
   
   val net = getNN
-  val entity = new NNEntity("Predictor", net, 5, 30)
+  val entity = new NNEntity("Predictor", net, 20, 30)
   val entityList = List(entity)
   
   "A Runner " should " be able to have it's name set " in {
@@ -41,7 +41,6 @@ class TestRunner extends FlatSpec {
   }
   it should " be able to run a simulation with one entity" in {
     runner.setEntities(entityList)
-    //runner.setUp
     runner.run
   }
   
