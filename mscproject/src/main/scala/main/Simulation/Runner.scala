@@ -28,13 +28,14 @@ class Runner(val dataLoader: LoadingDataFromCSVToIND, val graphDrawer: DrawingGr
     while (testIter.hasNext()) {
       val t: DataSet = testIter.next()
       val row = comparisonData(counter)
+      println("Iteration : " + counter)
       counter +=1
       if (first) {
-        entities.foreach { x => x.receive(t ,row) }
+        entities.par.foreach { x => x.receive(t ,row) }
         first = false
       }
       else {
-        entities.foreach { x => x.receive(t, row) }
+        entities.par.foreach { x => x.receive(t, row) }
       }
     }
     val optimal = dataLoader.optimalAtTimeStep

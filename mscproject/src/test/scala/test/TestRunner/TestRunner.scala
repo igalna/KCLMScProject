@@ -32,7 +32,7 @@ class TestRunner extends FlatSpec {
   val currenciesThenStocks = "currenciesThenStocks.csv"
   val blockSize50Intermixed = "unequalLengthTest.csv"
   val blockSize10Length500StocksCurrencies = "blockSize10Length500StocksCurrencies.csv"
-  val blockSize10Length500CurrenciesStocks = "blockSize10Length500StocksCurrencies.csv"
+  val blockSize10Length500CurrenciesStocks = "blockSize10Length500CurrenciesStocks.csv"
   
   val dataLoader = new LoadingDataFromCSVToIND
   val graphDrawer = new DrawingGraphs
