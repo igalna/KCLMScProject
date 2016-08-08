@@ -82,7 +82,9 @@ class Runner(val dataLoader: LoadingDataFromCSVToIND, val graphDrawer: DrawingGr
     
     printStats(arrayOfNamedSequences, optimalNamedSequence, indexOfOptimal)
     val list = arrayOfNamedSequences.toList
+    println("predicted list length : " + list.length)
     graphDrawer.drawGraphFromSequences("Predicted", list)
+    println("Here")
     graphDrawer.drawGraphFromSequences("As a Percentage Of Optimal", arrayOfNSAsAPercentageOfOptimal.toList)
   }
   

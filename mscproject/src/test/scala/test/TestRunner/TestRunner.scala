@@ -17,6 +17,7 @@ import org.deeplearning4j.nn.conf.Updater
 import main.Entities.NNEntity
 import main.Entities.NNCreatorEntity
 import main.DataCreation.Creator
+import main.Entities.RandomEntity
 
 class TestRunner extends FlatSpec {
   
@@ -49,18 +50,26 @@ class TestRunner extends FlatSpec {
 //    runner.run
 //  }
   
-  "A Runner " should " be able to have two entities" in {
-    val entity1 = new NNEntity("Entity1", getNN, 20, 30)
+//  "A Runner " should " be able to have two entities" in {
+//    val entity1 = new NNEntity("Entity1", getNN, 20, 30)
+//    
+//    val creator = new Creator
+//    creator.setNumberOfDataItemsToCreate(500)
+//    creator.setRangeToCreateDataFromWithin(1.0)
+//    
+//    val creatorEntity = new NNCreatorEntity("Creator Entity", getNN,
+//                                            20,
+//                                            5,
+//                                            creator)
+//    val entityList = List(entity1, creatorEntity)
+//    runner.setEntities(entityList)
+//    runner.run
+//  }
+  
+  "A Runner" should " be able to use Random Entities" in {
+    val randomEntity = new RandomEntity("Mr. Random")
+    val entityList = List(randomEntity)
     
-    val creator = new Creator
-    creator.setNumberOfDataItemsToCreate(500)
-    creator.setRangeToCreateDataFromWithin(1.0)
-    
-    val creatorEntity = new NNCreatorEntity("Creator Entity", getNN,
-                                            20,
-                                            5,
-                                            creator)
-    val entityList = List(entity1, creatorEntity)
     runner.setEntities(entityList)
     runner.run
   }
