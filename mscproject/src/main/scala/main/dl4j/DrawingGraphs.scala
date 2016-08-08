@@ -58,6 +58,7 @@ class DrawingGraphs {
       case 5 => drawGraphFromSequences(title, sequences(0), sequences(1), sequences(2), sequences(3), sequences(4))
       case 6 => drawGraphFromSequences(title, sequences(0), sequences(1), sequences(2), sequences(3), sequences(4), sequences(5))
       case 7 => drawGraphFromSequences(title, sequences(0), sequences(1), sequences(2), sequences(3), sequences(4), sequences(5), sequences(6))
+      case 8 => drawGraphFromSequences(title, sequences(0), sequences(1), sequences(2), sequences(3), sequences(4), sequences(5), sequences(6), sequences(7))
     }
   }
   private def drawGraphFromSequences(title: String, seq1: NamedSequence,
@@ -214,6 +215,47 @@ class DrawingGraphs {
                      Y(seq7.seq, seq7.name,
                          style = XYPlotStyle.LinesPoints,
                          color = Color.Black))
+        , title = title
+        ,showLegend = true
+        ,x = Axis(label = "Time Step")
+        ,y = Axis(label = "Fluctuation")))
+  }
+  
+  private def drawGraphFromSequences(title: String, seq1: NamedSequence, 
+                                                    seq2: NamedSequence, 
+                                                    seq3: NamedSequence, 
+                                                    seq4: NamedSequence, 
+                                                    seq5: NamedSequence,
+                                                    seq6: NamedSequence,
+                                                    seq7: NamedSequence,
+                                                    seq8: NamedSequence) = {
+    val y = (1 until seq1.seq.size+1).map { _.toDouble }
+    output(GUI,
+    xyChart(y -> Seq(
+                     Y(seq1.seq, seq1.name, 
+                         style = XYPlotStyle.LinesPoints,
+                         color = Color.Red),
+                     Y(seq2.seq, seq2.name, 
+                         style = XYPlotStyle.LinesPoints,
+                         color = Color.Mustard),
+                     Y(seq3.seq, seq3.name, 
+                         style = XYPlotStyle.LinesPoints,
+                         color = Color.Blue),
+                     Y(seq4.seq, seq4.name, 
+                         style = XYPlotStyle.LinesPoints,
+                         color = Color.Purple),
+                     Y(seq5.seq, seq5.name,
+                         style = XYPlotStyle.LinesPoints,
+                         color = Color.DarkGreen),
+                     Y(seq6.seq, seq6.name,
+                         style = XYPlotStyle.LinesPoints,
+                         color = Color.Magenta),
+                     Y(seq7.seq, seq7.name,
+                         style = XYPlotStyle.LinesPoints,
+                         color = Color.Black),
+                     Y(seq8.seq, seq8.name,
+                         style = XYPlotStyle.LinesPoints,
+                         color = Color.Grey))
         , title = title
         ,showLegend = true
         ,x = Axis(label = "Time Step")

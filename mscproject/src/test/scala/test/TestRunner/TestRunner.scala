@@ -14,22 +14,30 @@ import org.nd4j.linalg.lossfunctions.LossFunctions.LossFunction
 import org.deeplearning4j.nn.conf.layers.GravesLSTM
 import org.deeplearning4j.nn.conf.layers.RnnOutputLayer
 import org.deeplearning4j.nn.conf.Updater
+import org.deeplearning4j.nn.conf.layers.OutputLayer
+import org.deeplearning4j.nn.conf.layers.DenseLayer
 import main.Entities.NNEntity
-import main.Entities.NNCreatorEntity
-import main.DataCreation.Creator
 import main.Entities.RandomEntity
+import main.Entities.NNCreatorEntity
+import main.traits.Entity
+import main.DataCreation.Creator
+import main.Entities.BestFromLastIterationEntity
 
 class TestRunner extends FlatSpec {
   
   val folderPath = "C:/Users/igaln/Documents/King's stuff/King's MSc project/Data/Trading/test data/dl4j/"
   val smallStocks = "smallTestFileEarliestToLatest.csv"
   val smallCurrencies = "currenciesSmallEarliestToLatest.csv"
-  
+  val stocksThenCurrencies = "stocksThenCurrencies.csv"
+  val currenciesThenStocks = "currenciesThenStocks.csv"
+  val blockSize50Intermixed = "unequalLengthTest.csv"
+  val blockSize10Length500StocksCurrencies = "blockSize10Length500StocksCurrencies.csv"
+  val blockSize10Length500CurrenciesStocks = "blockSize10Length500StocksCurrencies.csv"
   
   val dataLoader = new LoadingDataFromCSVToIND
   val graphDrawer = new DrawingGraphs
   
-  val runner = new Runner(dataLoader, graphDrawer, folderPath + smallCurrencies)
+  val runner = new Runner(dataLoader, graphDrawer, folderPath + blockSize10Length500StocksCurrencies)
   
   var numOutputs = runner.numOutputs
   
@@ -65,10 +73,39 @@ class TestRunner extends FlatSpec {
 //    runner.setEntities(entityList)
 //    runner.run
 //  }
+//  
+//  "A Runner" should " be able to use Random Entities" in {
+//    val randomEntity = new RandomEntity("Mr. Random")
+//    val entityList = List(randomEntity)
+//    
+//    runner.setEntities(entityList)
+//    runner.run
+//  }
   
-  "A Runner" should " be able to use Random Entities" in {
+//  "A Runner" should " work with tit for tat entities" in {
+//    val tft = new BestFromLastIterationEntity("tit for tat")
+//    val entityList = List(tft)
+//    
+//    runner.setEntities(entityList)
+//    runner.run
+//  }
+  
+  "A Runner" should " have multiple entities" in {
+    val tft = new BestFromLastIterationEntity("tit for tat")
     val randomEntity = new RandomEntity("Mr. Random")
-    val entityList = List(randomEntity)
+    val entity = new NNEntity("Predictor", getNN, 20, 30)
+    val creator = new Creator
+    creator.setNumberOfDataItemsToCreate(500)
+    creator.setRangeToCreateDataFromWithin(1.5)
+    
+    val creatorEntity = new NNCreatorEntity("Creator Entity", getNN,
+                                            20,
+                                            7,
+                                            creator)
+    
+    val classifierEntity = new NNEntity("Classifier", getClassifier, 20, 30)
+    
+    val entityList:List[Entity] = List(tft, randomEntity, entity, creatorEntity)
     
     runner.setEntities(entityList)
     runner.run
@@ -112,5 +149,35 @@ class TestRunner extends FlatSpec {
     
     val net: MultiLayerNetwork = new MultiLayerNetwork(conf)
     net
+  }
+  
+  private def getClassifier: MultiLayerNetwork = {
+    val conf: MultiLayerConfiguration = new NeuralNetConfiguration.Builder()
+            .seed(123)
+            .iterations(1)
+            .optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT)
+            .learningRate(0.001)
+            .updater(Updater.NESTEROVS)
+            .momentum(0.9)
+            .list(2)
+            .layer(0, new DenseLayer.Builder()
+                     .nIn(numOutputs)
+                     .nOut(30)
+                     .weightInit(WeightInit.XAVIER)
+                     .activation("relu")
+                     .build())
+            .layer(1, new OutputLayer.Builder(LossFunction.NEGATIVELOGLIKELIHOOD)
+                     .weightInit(WeightInit.XAVIER)
+                     .activation("softmax")
+                     .weightInit(WeightInit.XAVIER)
+                     .nIn(30)
+                     .nOut(numOutputs)
+                     .build())
+            .pretrain(false)
+            .backprop(true)
+            .build()
+              
+    val model = new MultiLayerNetwork(conf)
+    model
   }
 }

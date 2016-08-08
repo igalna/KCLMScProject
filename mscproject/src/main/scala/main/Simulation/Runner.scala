@@ -82,9 +82,7 @@ class Runner(val dataLoader: LoadingDataFromCSVToIND, val graphDrawer: DrawingGr
     
     printStats(arrayOfNamedSequences, optimalNamedSequence, indexOfOptimal)
     val list = arrayOfNamedSequences.toList
-    println("predicted list length : " + list.length)
     graphDrawer.drawGraphFromSequences("Predicted", list)
-    println("Here")
     graphDrawer.drawGraphFromSequences("As a Percentage Of Optimal", arrayOfNSAsAPercentageOfOptimal.toList)
   }
   
@@ -93,7 +91,6 @@ class Runner(val dataLoader: LoadingDataFromCSVToIND, val graphDrawer: DrawingGr
     val sumOfMean = arr(arr.length-3).seq.sum
     val sumOfMedian = arr(arr.length-2).seq.sum
     
-    println("Array Length : " + arr.length)
     val length = opt.seq.length -1
     
     println("Sum of Values for Optimal : " + sumOfOptimal)
@@ -110,6 +107,5 @@ class Runner(val dataLoader: LoadingDataFromCSVToIND, val graphDrawer: DrawingGr
       println(name + " as a percentage of Optimal : " + sum * 100 / sumOfOptimal)
       println()
     }
-    
   }
 }
