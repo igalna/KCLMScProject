@@ -41,7 +41,7 @@ class NNEntity(val name: String,
       val predicted: INDArray = net.rnnTimeStep(features)
       
       val outputProbDistribution = Array.range(0, numOutputs).map(predicted.getDouble)
-      val outputIndex: Int = findIndexOfHighestValue(outputProbDistribution)
+      val outputIndex: Int = Entity.findIndexOfHighestValue(outputProbDistribution)
       outcomeList += outputIndex
     }
   }
@@ -53,17 +53,4 @@ class NNEntity(val name: String,
   override def getName: String = {
     name
   }
-  
-	private def findIndexOfHighestValue(distribution: Array[Double]): Int = {
-		var maxValueIndex: Int = 0
-		var maxValue: Double = 0
-		Seq.range(0, distribution.length).foreach { i =>
-			if(distribution(i) > maxValue) {
-				maxValue = distribution(i)
-				maxValueIndex = i
-			}
-		}
-		maxValueIndex
-  }
-  
 }
