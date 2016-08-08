@@ -108,6 +108,7 @@ class Runner(val dataLoader: LoadingDataFromCSVToIND, val graphDrawer: DrawingGr
       val sum = ns.seq.sum
       println("Sum of Values for " + name + " : " + sum)
       println(name + " as a percentage of Optimal : " + sum * 100 / sumOfOptimal)
+      println()
     }
     
   }
