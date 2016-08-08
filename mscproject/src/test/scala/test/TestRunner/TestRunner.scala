@@ -58,7 +58,7 @@ class TestRunner extends FlatSpec {
     
     val creatorEntity = new NNCreatorEntity("Creator Entity", getNN,
                                             20,
-                                            30,
+                                            5,
                                             creator)
     val entityList = List(entity1, creatorEntity)
     runner.setEntities(entityList)
