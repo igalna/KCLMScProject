@@ -15,44 +15,55 @@ import org.deeplearning4j.nn.conf.layers.GravesLSTM
 import org.deeplearning4j.nn.conf.layers.RnnOutputLayer
 import org.deeplearning4j.nn.conf.Updater
 import main.Entities.NNEntity
+import main.Entities.NNCreatorEntity
+import main.DataCreation.Creator
 
 class TestRunner extends FlatSpec {
   
   val folderPath = "C:/Users/igaln/Documents/King's stuff/King's MSc project/Data/Trading/test data/dl4j/"
   val smallStocks = "smallTestFileEarliestToLatest.csv"
+  val smallCurrencies = "currenciesSmallEarliestToLatest.csv"
   
   
   val dataLoader = new LoadingDataFromCSVToIND
   val graphDrawer = new DrawingGraphs
   
-  val runner = new Runner(dataLoader, graphDrawer, folderPath + smallStocks)
+  val runner = new Runner(dataLoader, graphDrawer, folderPath + smallCurrencies)
   
-  val numOutputs = runner.numOutputs
+  var numOutputs = runner.numOutputs
   
-  "A Runner " should " be able to have it's name set " in {
-    //runner.setFileName(folderPath + smallStocks)
-  }
-  it should " be able to have its entity list set" in {
-    val net = getNN
-    val entity = new NNEntity("Predictor", net, 20, 30)
-    val entityList = List(entity)
-    runner.setEntities(entityList)
-  }
-  it should " be able to run a simulation with one entity" in {
-    val net = getNN
-    val entity = new NNEntity("Predictor", net, 20, 30)
-    val entityList = List(entity)
+//  "A Runner " should " be able to have it's name set " in {
+//    //runner.setFileName(folderPath + smallStocks)
+//  }
+//  it should " be able to have its entity list set" in {
+//    val net = getNN
+//    val entity = new NNEntity("Predictor", net, 20, 30)
+//    val entityList = List(entity)
+//    runner.setEntities(entityList)
+//  }
+//  it should " be able to run a simulation with one entity" in {
+//    val net = getNN
+//    val entity = new NNEntity("Predictor", net, 20, 30)
+//    val entityList = List(entity)
+//    runner.setEntities(entityList)
+//    runner.run
+//  }
+  
+  "A Runner " should " be able to have two entities" in {
+    val entity1 = new NNEntity("Entity1", getNN, 20, 30)
+    
+    val creator = new Creator
+    creator.setNumberOfDataItemsToCreate(500)
+    creator.setRangeToCreateDataFromWithin(1.0)
+    
+    val creatorEntity = new NNCreatorEntity("Creator Entity", getNN,
+                                            20,
+                                            30,
+                                            creator)
+    val entityList = List(entity1, creatorEntity)
     runner.setEntities(entityList)
     runner.run
   }
-//  it should "be able to run a simulation with two entities" in {
-//    val net = getNN
-//    val entity = new NNEntity("another", net, 20, 30)
-//    val entity1 = new NNEntity("another", net, 1, 5)
-//    val list = List(entity, entity1)
-//    runner.setEntities(list)
-//    runner.run
-//  }
   
   private def getNN: MultiLayerNetwork = {
     val conf: MultiLayerConfiguration = new NeuralNetConfiguration.Builder()

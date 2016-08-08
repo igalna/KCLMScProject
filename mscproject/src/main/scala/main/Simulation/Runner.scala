@@ -55,7 +55,8 @@ class Runner(val dataLoader: LoadingDataFromCSVToIND, val graphDrawer: DrawingGr
         predictionValues += diff
         if (counter == 0) {
           val mean = differences(internalCounter).sum / differences(internalCounter).length
-          val median = differences(internalCounter).sortWith(_ < _)(differences.size/2)
+          val m = differences(internalCounter).sortWith(_ < _)
+          val median = m(m.size/2)
           meanValues += mean
           medianValues += median
         }
@@ -87,9 +88,10 @@ class Runner(val dataLoader: LoadingDataFromCSVToIND, val graphDrawer: DrawingGr
   
   private def printStats(arr: Array[NamedSequence], opt: NamedSequence, inx: Seq[Int]) = {
     val sumOfOptimal = opt.seq.sum
-    val sumOfMean = arr(arr.length-2).seq.sum
-    val sumOfMedian = arr(arr.length-1).seq.sum
+    val sumOfMean = arr(arr.length-3).seq.sum
+    val sumOfMedian = arr(arr.length-2).seq.sum
     
+    println("Array Length : " + arr.length)
     val length = opt.seq.length -1
     
     println("Sum of Values for Optimal : " + sumOfOptimal)
@@ -98,7 +100,7 @@ class Runner(val dataLoader: LoadingDataFromCSVToIND, val graphDrawer: DrawingGr
     println("Mean as a percentage of Optimal : " + sumOfMean * 100 / sumOfOptimal)
     println("Median as a percentage of Optimal : " + sumOfMedian * 100 / sumOfOptimal)
     println()
-    val newArr = arr.dropRight(2)
+    val newArr = arr.dropRight(3)
     for (ns <- newArr) {
       val name = ns.name
       val sum = ns.seq.sum

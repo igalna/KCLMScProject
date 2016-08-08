@@ -18,6 +18,9 @@ class Creator {
   def removeDataFromKnownData = {
     currentlyKnownData.remove(0)
   }
+  def getSizeOfKnownData: Int = {
+    currentlyKnownData.size
+  }
   def setRangeToCreateDataFromWithin(range: Double) = {
     rangeToCreateDataFromWithin = range
   }

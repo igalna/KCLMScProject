@@ -8,3 +8,17 @@ trait Entity {
   def getListOfIndiciesOfActions: List[Int]
   def getName: String
 }
+
+object Entity {
+	def findIndexOfHighestValue(distribution: Array[Double]): Int = {
+		var maxValueIndex: Int = 0
+		var maxValue: Double = 0
+		Seq.range(0, distribution.length).foreach { i =>
+			if(distribution(i) > maxValue) {
+				maxValue = distribution(i)
+				maxValueIndex = i
+			}
+		}
+		maxValueIndex
+  }
+}
