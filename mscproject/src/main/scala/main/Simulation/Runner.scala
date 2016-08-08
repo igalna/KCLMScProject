@@ -45,6 +45,7 @@ class Runner(val dataLoader: LoadingDataFromCSVToIND, val graphDrawer: DrawingGr
     var meanValues: ListBuffer[Double] = new ListBuffer
     var medianValues: ListBuffer[Double] = new ListBuffer
     var arrayOfNamedSequences: Array[NamedSequence] = new Array(entities.size +3)
+    var arrayOfNSAsAPercentageOfOptimal: Array[NamedSequence] = new Array(entities.size +2)
     for (x <- entities) {
       var predictionValues: ListBuffer[Double] = new ListBuffer
       var internalCounter = 0
@@ -62,12 +63,18 @@ class Runner(val dataLoader: LoadingDataFromCSVToIND, val graphDrawer: DrawingGr
       }
       val namedSequence = new NamedSequence(x.getName, predictionValues)
       arrayOfNamedSequences(counter) = namedSequence
+      val asAPercentageOfOptimal = new NamedSequence(x.getName, graphDrawer.sequenceAsPercentageOfAnother(predictionValues, optimal))
+      arrayOfNSAsAPercentageOfOptimal(counter) = asAPercentageOfOptimal
       counter += 1
     }
     val meanNamedSequence = new NamedSequence("Mean", meanValues)
     val medianNamedSequence = new NamedSequence("Median", medianValues)
+    val meanAsPercentageOfOptimal = new NamedSequence("Mean", graphDrawer.sequenceAsPercentageOfAnother(meanValues, optimal))
+    val medianAsPercentageOfOptimal = new NamedSequence("Median", graphDrawer.sequenceAsPercentageOfAnother(medianValues, optimal))
     arrayOfNamedSequences(counter) = meanNamedSequence
-    arrayOfNamedSequences(counter+ 1) = medianNamedSequence
+    arrayOfNamedSequences(counter + 1) = medianNamedSequence
+    arrayOfNSAsAPercentageOfOptimal(counter) = meanAsPercentageOfOptimal
+    arrayOfNSAsAPercentageOfOptimal(counter + 1) = medianAsPercentageOfOptimal
     
     val optimalNamedSequence = new NamedSequence("Optimal", optimal.take(optimal.length-1))
     arrayOfNamedSequences(counter + 2) = optimalNamedSequence
@@ -75,6 +82,7 @@ class Runner(val dataLoader: LoadingDataFromCSVToIND, val graphDrawer: DrawingGr
     printStats(arrayOfNamedSequences, optimalNamedSequence, indexOfOptimal)
     val list = arrayOfNamedSequences.toList
     graphDrawer.drawGraphFromSequences("Predicted", list)
+    graphDrawer.drawGraphFromSequences("As a Percentage Of Optimal", arrayOfNSAsAPercentageOfOptimal.toList)
   }
   
   private def printStats(arr: Array[NamedSequence], opt: NamedSequence, inx: Seq[Int]) = {

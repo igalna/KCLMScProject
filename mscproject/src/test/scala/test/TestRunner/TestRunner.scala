@@ -29,20 +29,30 @@ class TestRunner extends FlatSpec {
   
   val numOutputs = runner.numOutputs
   
-  val net = getNN
-  val entity = new NNEntity("Predictor", net, 20, 30)
-  val entityList = List(entity)
-  
   "A Runner " should " be able to have it's name set " in {
     //runner.setFileName(folderPath + smallStocks)
   }
   it should " be able to have its entity list set" in {
+    val net = getNN
+    val entity = new NNEntity("Predictor", net, 20, 30)
+    val entityList = List(entity)
     runner.setEntities(entityList)
   }
   it should " be able to run a simulation with one entity" in {
+    val net = getNN
+    val entity = new NNEntity("Predictor", net, 20, 30)
+    val entityList = List(entity)
     runner.setEntities(entityList)
     runner.run
   }
+//  it should "be able to run a simulation with two entities" in {
+//    val net = getNN
+//    val entity = new NNEntity("another", net, 20, 30)
+//    val entity1 = new NNEntity("another", net, 1, 5)
+//    val list = List(entity, entity1)
+//    runner.setEntities(list)
+//    runner.run
+//  }
   
   private def getNN: MultiLayerNetwork = {
     val conf: MultiLayerConfiguration = new NeuralNetConfiguration.Builder()
