@@ -46,10 +46,19 @@ class Creator {
     while (counter <= numberOfDataItemsToCreate) {
       var addList: ListBuffer[Double] = new ListBuffer
       for (double <- avgList) {
-        val random = rnd.nextDouble()
-        val rangeMin = double - rangeToCreateDataFromWithin
-        val rangeMax = double + rangeToCreateDataFromWithin
-        val randomInRange = rangeMin - (rangeMin + rangeMax) * random
+        //val random = rnd.nextDouble()
+        val whatIsXPercentOfY = (rangeToCreateDataFromWithin * double) / 100.0
+        val upperBound = double + whatIsXPercentOfY
+        val lowerBound = (if (double - whatIsXPercentOfY > 0) {
+                            double - whatIsXPercentOfY
+                          } else 0.1)
+        val range = lowerBound.toInt to upperBound.toInt
+   
+        val rnd = new Random
+        val randomInRange = (range(rnd.nextInt(range length)))
+//        val rangeMin = double - rangeToCreateDataFromWithin
+//        val rangeMax = double + rangeToCreateDataFromWithin
+//        val randomInRange = rangeMin - (rangeMin + rangeMax) * random
         addList += randomInRange
       }
       createdData += addList.toArray
