@@ -19,6 +19,8 @@ class NNMutator(private var numericalMutatePercentageRange: Double) {
   }
   
   private def matchKVToNewValue(key: String, value: String): (String,String) = {
+    var rand = new Random
+    
     key match {
       case "hiddenLayerWidth" => (key, intMutator(value.toInt))
       case "numHiddenLayers"  => (key, intMutator(value.toInt))
@@ -26,17 +28,24 @@ class NNMutator(private var numericalMutatePercentageRange: Double) {
       case "numOutputs"       => (key,value)
       case "iterations"       => (key, intMutator(value.toInt))
       case "learningRate"     => (key, doubleMutator(value.toDouble))
-      case "optimizationAlgo" => (key, stringMutator(key))
+      case "optimizationAlgo" => if (rand.nextInt(100) < numericalMutatePercentageRange) {(key, stringMutator(key))}
+                                 else { (key, value) } 
       case "seed"             => (key, intMutator(value.toInt))
       case "biasInit"         => (key, value)
       case "miniBatch"        => (key, value)
-      case "updater"          => (key, stringMutator(key))
-      case "weightInit"       => (key, stringMutator(key))
+      case "updater"          => if (rand.nextInt(100) < numericalMutatePercentageRange) {(key, stringMutator(key))}
+                                 else { (key, value) } 
+      case "weightInit"       => if (rand.nextInt(100) < numericalMutatePercentageRange) {(key, stringMutator(key))}
+                                 else { (key, value) } 
       case "momentum"         => (key, doubleMutator(value.toDouble))
-      case "layerType"        => (key, stringMutator(key))
-      case "activation"       => (key, stringMutator(key))
-      case "lossFunction"     => (key, stringMutator(key))
-      case "outputActivation" => (key, stringMutator(key))
+      case "layerType"        => if (rand.nextInt(100) < numericalMutatePercentageRange) {(key, stringMutator(key))}
+                                 else { (key, value) } 
+      case "activation"       => if (rand.nextInt(100) < numericalMutatePercentageRange) {(key, stringMutator(key))}
+                                 else { (key, value) } 
+      case "lossFunction"     => if (rand.nextInt(100) < numericalMutatePercentageRange) {(key, stringMutator(key))}
+                                 else { (key, value) } 
+      case "outputActivation" => if (rand.nextInt(100) < numericalMutatePercentageRange) {(key, stringMutator(key))}
+                                 else { (key, value) } 
       case "preTrain"         => (key, value)
       case "backProp"         => (key, value)
     }
@@ -46,7 +55,7 @@ class NNMutator(private var numericalMutatePercentageRange: Double) {
     val whatIsXPercentOfY = (numericalMutatePercentageRange * previous) / 100.0
     
     val upperBound: Int = previous + whatIsXPercentOfY.toInt
-    val lowerBound: Int = (if (previous - whatIsXPercentOfY.toInt > 0) {
+    val lowerBound: Int = (if (previous - whatIsXPercentOfY.toInt >= 0) {
                             previous - whatIsXPercentOfY.toInt
                           } else 1)
     val range = lowerBound to upperBound
@@ -57,15 +66,13 @@ class NNMutator(private var numericalMutatePercentageRange: Double) {
   
   private def doubleMutator(previous: Double): String = {
     val whatIsXPercentOfY = (numericalMutatePercentageRange * previous) / 100.0
-    
     val upperBound = previous + whatIsXPercentOfY
-    val lowerBound = (if (previous - whatIsXPercentOfY > 0) {
+    val lowerBound = (if (previous - whatIsXPercentOfY >= 0) {
                             previous - whatIsXPercentOfY
                           } else 0.1)
-    val range = lowerBound.toInt to upperBound.toInt
-   
     val rnd = new Random
-    (range(rnd.nextInt(range length))).toString()
+    val d = lowerBound + rnd.nextDouble() * upperBound
+    d.toString()
   }
   
   private def stringMutator(key: String): String = {

@@ -2,17 +2,33 @@ package test.TestNNBuilder
 
 import org.scalatest.FlatSpec
 import main.NNBuilder.NNMutator
+import main.NNBuilder.NNBuilder
+import main.NNBuilder.NNBuilder
+import org.deeplearning4j.nn.multilayer.MultiLayerNetwork
 
 class TestNNMutator extends FlatSpec {
   
-  val NNMutator = new NNMutator(5)
+  val NNBuilder = new NNBuilder
+  val NNMutator = new NNMutator(100)
   val map = getMap
   
   val mutatedMap = NNMutator.mutateFromMap(map)
+  val mutant = NNMutator.mutateFromMap(mutatedMap)
+  val secondGenerationMutant = NNMutator.mutateFromMap(mutant)
+
   
   "A mutated map" should " be different from it's source" in {
     println(map)
     println(mutatedMap)
+    
+  }
+  it should "be able to create an NN from a mutated map" in {
+    val x = NNBuilder.buildFromMap(mutant)
+    assert(x.isInstanceOf[MultiLayerNetwork])
+  }
+  it should "be able to create NN from second generation mutated maps" in {
+    val secondGenerationNet = NNBuilder.buildFromMap(secondGenerationMutant)
+    assert(secondGenerationNet.isInstanceOf[MultiLayerNetwork])
   }
   
   def getMap: Map[String, String] = {
@@ -44,9 +60,10 @@ class TestNNMutator extends FlatSpec {
     map += ("updater" -> updater)
     val weightInit = "xavier"
     map += ("weightInit" -> weightInit)
+    val momentum = "0.01"
+    map += ("momentum" -> momentum)
     
-//    val numLayers = "3"
-//    map += ("numLayers" -> numLayers)
+
     val layerType = "graveslstm"
     map += ("layerType" -> layerType)
     val activation = "tanh"
