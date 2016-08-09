@@ -69,6 +69,9 @@ class TestNNBuilder extends FlatSpec{
     map += ("updater" -> updater)
     val weightInit = "xavier"
     map += ("weightInit" -> weightInit)
+    val momentum = "0.1"
+    map += ("momentum" -> momentum)
+    
     
     val numLayers = "3"
     map += ("numLayers" -> numLayers)

@@ -33,11 +33,17 @@ class TestRunner extends FlatSpec {
   val blockSize50Intermixed = "unequalLengthTest.csv"
   val blockSize10Length500StocksCurrencies = "blockSize10Length500StocksCurrencies.csv"
   val blockSize10Length500CurrenciesStocks = "blockSize10Length500CurrenciesStocks.csv"
+  val blockSize5Length100CurrenciesStocks = "blockSize5Length100CurrenciesStocks.csv"
+  val blockSize5Length100StocksCurrencies = "blockSize5Length100StocksCurrencies.csv"
+  val stocks501 = "stocks501.csv"
+  
+  val stocks201Recent = "stocks201Recent.csv"
+  val currencies201Recent = "currencies201Recent.csv"
   
   val dataLoader = new LoadingDataFromCSVToIND
   val graphDrawer = new DrawingGraphs
   
-  val runner = new Runner(dataLoader, graphDrawer, folderPath + blockSize10Length500StocksCurrencies)
+  val runner = new Runner(dataLoader, graphDrawer, folderPath + currenciesThenStocks)
   
   var numOutputs = runner.numOutputs
   
@@ -91,21 +97,21 @@ class TestRunner extends FlatSpec {
 //  }
   
   "A Runner" should " have multiple entities" in {
-    val tft = new BestFromLastIterationEntity("tit for tat")
-    val randomEntity = new RandomEntity("Mr. Random")
+    val tft = new BestFromLastIterationEntity("LastBestChoice")
+    val randomEntity = new RandomEntity("Random")
     val entity = new NNEntity("Predictor", getNN, 20, 30)
     val creator = new Creator
-    creator.setNumberOfDataItemsToCreate(500)
-    creator.setRangeToCreateDataFromWithin(1.5)
+    creator.setNumberOfDataItemsToCreate(300)
+    creator.setRangeToCreateDataFromWithin(20)
     
     val creatorEntity = new NNCreatorEntity("Creator Entity", getNN,
-                                            20,
-                                            7,
+                                            10,
+                                            3,
                                             creator)
     
     val classifierEntity = new NNEntity("Classifier", getClassifier, 20, 30)
     
-    val entityList:List[Entity] = List(tft, randomEntity, entity, creatorEntity)
+    val entityList:List[Entity] = List(entity, creatorEntity)
     
     runner.setEntities(entityList)
     runner.run
@@ -122,6 +128,7 @@ class TestRunner extends FlatSpec {
       .updater(Updater.RMSPROP)
       .weightInit(WeightInit.XAVIER)
       .regularization(true)
+      .momentum(0.1)
       .list()
       .layer(0, new GravesLSTM.Builder()
         .nIn(numOutputs)

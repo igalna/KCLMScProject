@@ -36,6 +36,7 @@ class NNBuilder {
     val miniBatch = map.get("miniBatch").get.toString().toBoolean
     val updater = Updater.valueOf(map.get("updater").get.toUpperCase())
     val weightInit = WeightInit.valueOf(map.get("weightInit").get.toUpperCase())
+    val momentum = map.get("momentum").get.toString().toDouble
     
     val builder = new NeuralNetConfiguration.Builder()
       .iterations(iterations)
@@ -46,6 +47,7 @@ class NNBuilder {
       .miniBatch(miniBatch)
       .updater(updater)
       .weightInit(weightInit)
+      .momentum(momentum)
     
     val layerType = map.get("layerType").get
     val activation = map.get("activation").get
