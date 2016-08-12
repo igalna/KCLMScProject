@@ -23,10 +23,11 @@ class NNMutator(private var numericalMutatePercentageRange: Double) {
     
     key match {
       case "hiddenLayerWidth" => (key, intMutator(value.toInt))
-      case "numHiddenLayers"  => (key, intMutator(value.toInt))
+      case "numHiddenLayers"  => (key,value)
+                                 //(key, intMutator(value.toInt))
       case "numInputs"        => (key,value)
       case "numOutputs"       => (key,value)
-      case "iterations"       => (key, intMutator(value.toInt))
+      case "iterations"       => (key, value)
       case "learningRate"     => (key, doubleMutator(value.toDouble))
       case "optimizationAlgo" => if (rand.nextInt(100) < numericalMutatePercentageRange) {(key, stringMutator(key))}
                                  else { (key, value) } 
@@ -38,8 +39,9 @@ class NNMutator(private var numericalMutatePercentageRange: Double) {
       case "weightInit"       => if (rand.nextInt(100) < numericalMutatePercentageRange) {(key, stringMutator(key))}
                                  else { (key, value) } 
       case "momentum"         => (key, doubleMutator(value.toDouble))
-      case "layerType"        => if (rand.nextInt(100) < numericalMutatePercentageRange) {(key, stringMutator(key))}
-                                 else { (key, value) } 
+      case "layerType"        => (key, value)
+                                 //if (rand.nextInt(100) < numericalMutatePercentageRange) {(key, stringMutator(key))}
+                                 //else { (key, value) } 
       case "activation"       => if (rand.nextInt(100) < numericalMutatePercentageRange) {(key, stringMutator(key))}
                                  else { (key, value) } 
       case "lossFunction"     => if (rand.nextInt(100) < numericalMutatePercentageRange) {(key, stringMutator(key))}
@@ -97,26 +99,31 @@ object NNMutator {
                                     "RELU","SIZE",
                                     "UNIFORM","VI",
                                     "XAVIER","ZERO")
+                                    
   val listOfUpdaterAlgo = List("ADADELTA","ADAGRAD",
-                                 "ADAM","CUSTOM",
+                                 "ADAM",
                                  "NESTEROVS","NONE",
                                  "RMSPROP","SGD")
-  val listOfOptoAlgo = List("CONJUGATE_GRADIENT", "HESSIAN_FREE",
+                                 
+  val listOfOptoAlgo = List("CONJUGATE_GRADIENT",
                               "LBFGS", "LINE_GRADIENT_DESCENT",
                               "STOCHASTIC_GRADIENT_DESCENT")
+                              
   val listOfLayerTypes = List("denselayer", "graveslstm")
   
   val listOfActivationFunctions = List("tanh","relu",
-                                       "sigmoid","ELU",
+                                       "sigmoid","elu",
                                        "acos","asin",
                                        "atan","ceil",
                                        "cos","exp",
                                        "floor","hardtanh",
-                                       "identity","maxout",
+                                       "identity",
                                        "negative","pow",
                                        "round","sign",
                                        "sin","softmax",
                                        "sqrt","stabilize")
+                                       // ,"maxout"
+                                       
   val listOfLossFunctions = List("MSE","EXPLL",
                                  "XENT","MCXENT",
                                  "RMSE_XENT","SQUARED_LOSS",
