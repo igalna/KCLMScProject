@@ -264,7 +264,8 @@ class DrawingGraphs {
   
   def sequenceAsPercentageOfAnother(seq: Seq[Double], optimal: Seq[Double] ): Seq[Double] = {
     val zipped = seq.zip(optimal)
-    val asPercentageOf = zipped.map( x => x._1 * 100 / x._2)
+    //val asPercentageOf = zipped.map( x => x._1 * 100 / x._2)
+    val asPercentageOf = zipped.map( x => (x._1 / x._2) * 100)
     asPercentageOf
   }
   

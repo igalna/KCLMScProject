@@ -48,6 +48,7 @@ class Creator {
       for (double <- avgList) {
         //val random = rnd.nextDouble()
         val whatIsXPercentOfY = (rangeToCreateDataFromWithin * double) / 100.0
+        //val whatIsXPercentOfY = rangeToCreateDataFromWithin * 100 / double
         val upperBound = double + whatIsXPercentOfY
         val lowerBound = (if (double - whatIsXPercentOfY > 0) {
                             double - whatIsXPercentOfY
