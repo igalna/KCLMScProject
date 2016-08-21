@@ -121,10 +121,10 @@ class TestRunner extends FlatSpec {
     
     val creator = new Creator
     creator.setNumberOfDataItemsToCreate(300)
-    creator.setRangeToCreateDataFromWithin(75)
+    creator.setRangeToCreateDataFromWithin(101)
     val creatorEntity = new NNCreatorEntity("Creator Entity", getNN,
                                             20,
-                                            10,
+                                            4,
                                             creator)
     
 
