@@ -1,13 +1,13 @@
 package main.Simulation
 
-import main.dl4j.DrawingGraphs
-import main.dl4j.LoadingDataFromCSVToIND
+import main.dl4j.Visualization
+import main.dl4j.DataLoader
 import main.traits.Entity
 import org.nd4j.linalg.dataset.DataSet
 import scala.collection.mutable.ListBuffer
 import main.dl4j.NamedSequence
 
-class Runner(val dataLoader: LoadingDataFromCSVToIND, val graphDrawer: DrawingGraphs, val fileName: String) {
+class Runner(val dataLoader: DataLoader, val graphDrawer: Visualization, val fileName: String) {
   
   private var entities: List[Entity] = _
   

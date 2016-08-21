@@ -10,7 +10,7 @@ import org.deeplearning4j.datasets.canova.RecordReaderDataSetIterator
 import scala.io.BufferedSource
 import java.io.PrintWriter
 
-class LoadingDataFromCSVToIND {
+class DataLoader {
   
   var dataFromFile: ListBuffer[Array[Double]] = new ListBuffer
   var WIDTH = 0

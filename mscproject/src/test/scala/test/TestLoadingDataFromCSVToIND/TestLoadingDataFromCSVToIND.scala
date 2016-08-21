@@ -1,11 +1,11 @@
 package test.TestLoadingDataFromCSVToIND
 
 import org.scalatest.FlatSpec
-import main.dl4j.LoadingDataFromCSVToIND
+import main.dl4j.DataLoader
 
 class TestLoadingDataFromCSVToIND extends FlatSpec{
   
-  val ld = new LoadingDataFromCSVToIND
+  val ld = new DataLoader
   
   val folderPath = "C:/Users/igaln/Documents/King's stuff/King's MSc project/Data/Trading/test data/dl4j/"
   val smallStocks = "stocks501Recent.csv"

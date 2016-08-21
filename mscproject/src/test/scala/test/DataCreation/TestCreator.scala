@@ -2,7 +2,7 @@ package test.DataCreation
 
 import org.scalatest.FlatSpec
 import main.DataCreation.Creator
-import main.dl4j.LoadingDataFromCSVToIND
+import main.dl4j.DataLoader
 import scala.collection.mutable.ListBuffer
 
 class TestCreator extends FlatSpec{

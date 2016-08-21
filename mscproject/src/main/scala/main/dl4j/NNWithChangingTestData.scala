@@ -30,8 +30,8 @@ object NNWithChangingTestData {
     val stocksThenCurrencies = "stocksThenCurrencies.csv"
     val currenciesThenStocks = "currenciesThenStocks.csv"
     
-    val dataLoader = new LoadingDataFromCSVToIND
-    val dg = new DrawingGraphs
+    val dataLoader = new DataLoader
+    val dg = new Visualization
     
     val unequal = folderPath + "unequalLengthTest.csv"
         

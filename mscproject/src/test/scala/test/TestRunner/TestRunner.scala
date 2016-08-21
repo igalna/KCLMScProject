@@ -1,8 +1,8 @@
 package test.TestRunner
 
 import org.scalatest.FlatSpec
-import main.dl4j.LoadingDataFromCSVToIND
-import main.dl4j.DrawingGraphs
+import main.dl4j.DataLoader
+import main.dl4j.Visualization
 import main.Simulation.Runner
 import main.NNBuilder.NNBuilder
 import org.deeplearning4j.nn.multilayer.MultiLayerNetwork
@@ -57,10 +57,10 @@ class TestRunner extends FlatSpec {
   val CurrenciesThen100StocksRecent = "100CurrenciesThen100StocksRecent.csv"
   val StocksThen100CurrenciesRecent = "100StocksThen100CurrenciesRecent.csv"
   
-  val dataLoader = new LoadingDataFromCSVToIND
-  val graphDrawer = new DrawingGraphs
+  val dataLoader = new DataLoader
+  val graphDrawer = new Visualization
   
-  val runner = new Runner(dataLoader, graphDrawer, folderPath + blockSize5Length100StocksCurrencies)
+  val runner = new Runner(dataLoader, graphDrawer, folderPath + blockSize25Length402StocksCurrencies)
   
   var numOutputs = runner.numOutputs
   println("numOutputs : " + numOutputs)
@@ -121,13 +121,13 @@ class TestRunner extends FlatSpec {
     
     val creator = new Creator
     creator.setNumberOfDataItemsToCreate(300)
-    creator.setRangeToCreateDataFromWithin(1.5)
+    creator.setRangeToCreateDataFromWithin(75)
     val creatorEntity = new NNCreatorEntity("Creator Entity", getNN,
                                             20,
-                                            30,
+                                            10,
                                             creator)
     
-    val classifierEntity = new NNEntity("Classifier", getClassifier, 20, 30)
+
     
     val mutatorEntity = new NNMutatorEntity("Mutator",
                                             getMap,
@@ -136,8 +136,16 @@ class TestRunner extends FlatSpec {
                                             new NNMutator(50),
                                             75,
                                             10)
+// use with    blockSize5Length100StocksCurrencies
+//    val greatResults = new NNMutatorEntity("Mutator",
+//                                            getMap,
+//                                            20,
+//                                            30,
+//                                            new NNMutator(50),
+//                                            75,
+//                                            10)
     
-    val entityList:List[Entity] = List(entity, creatorEntity, mutatorEntity)
+    val entityList:List[Entity] = List(entity, creatorEntity)
     
     runner.setEntities(entityList)
     runner.run

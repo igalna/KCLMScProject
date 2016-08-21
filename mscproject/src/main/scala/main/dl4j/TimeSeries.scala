@@ -50,7 +50,7 @@ object TimeSeries {
     val stocksTestFileName = "veryLargeTestFileEarliestToLatest.csv"
     val stocksTrainingFileName = "mediumTestFileEarliestToLatest.csv"
     
-    val dataLoader = new LoadingDataFromCSVToIND
+    val dataLoader = new DataLoader
     
     val trainingData = dataLoader.getDataSetFromCSV(folderPath + smallCurrencies)
     

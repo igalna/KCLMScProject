@@ -47,7 +47,7 @@ import org.datavec.api.writable.Writable
 import org.datavec.api.records.reader.impl.collection.CollectionSequenceRecordReader
 
   
-class DrawingGraphs {
+class Visualization {
   
   def drawGraphFromSequences(title: String, sequences: List[NamedSequence]) {
     val size = sequences.size

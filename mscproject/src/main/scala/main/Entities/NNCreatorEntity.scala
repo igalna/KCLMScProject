@@ -5,7 +5,7 @@ import org.deeplearning4j.nn.multilayer.MultiLayerNetwork
 import main.DataCreation.Creator
 import org.nd4j.linalg.dataset.DataSet
 import scala.collection.mutable.ListBuffer
-import main.dl4j.LoadingDataFromCSVToIND
+import main.dl4j.DataLoader
 import org.nd4j.linalg.api.ndarray.INDArray
 
 class NNCreatorEntity(val name: String, 
@@ -16,7 +16,7 @@ class NNCreatorEntity(val name: String,
   
   private var trainingData: ListBuffer[Array[Double]] = new ListBuffer
   private var outcomeList: ListBuffer[Int] = new ListBuffer
-  private var dataLoader: LoadingDataFromCSVToIND = new LoadingDataFromCSVToIND
+  private var dataLoader: DataLoader = new DataLoader
   
   private var first = true
   

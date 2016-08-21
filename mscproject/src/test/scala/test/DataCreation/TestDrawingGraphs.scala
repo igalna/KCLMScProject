@@ -1,12 +1,12 @@
 package test.DataCreation
 
 import org.scalatest.FlatSpec
-import main.dl4j.DrawingGraphs
+import main.dl4j.Visualization
 import org.deeplearning4j.nn.multilayer.MultiLayerNetwork
 import org.deeplearning4j.nn.api.OptimizationAlgorithm
 import org.nd4j.linalg.api.ndarray.INDArray
-import main.dl4j.LoadingDataFromCSVToIND
-import main.dl4j.DrawingGraphs
+import main.dl4j.DataLoader
+import main.dl4j.Visualization
 import org.deeplearning4j.nn.weights.WeightInit
 import org.deeplearning4j.nn.conf.MultiLayerConfiguration
 import scala.collection.mutable.ListBuffer
@@ -17,13 +17,13 @@ import org.deeplearning4j.nn.conf.layers.GravesLSTM
 import org.deeplearning4j.nn.conf.layers.RnnOutputLayer
 import org.nd4j.linalg.dataset.DataSet
 import org.deeplearning4j.nn.conf.Updater
-import main.dl4j.DrawingGraphs
-import main.dl4j.DrawingGraphs
+import main.dl4j.Visualization
+import main.dl4j.Visualization
 import main.dl4j.NamedSequence
 
 class TestDrawingGraphs extends FlatSpec{
   
-  val dg = new DrawingGraphs
+  val dg = new Visualization
   
   val folderPath = "C:/Users/igaln/Documents/King's stuff/King's MSc project/Data/Trading/test data/dl4j/"
     
@@ -35,10 +35,10 @@ class TestDrawingGraphs extends FlatSpec{
     val stocksTrainingFileName = "mediumTestFileEarliestToLatest.csv"
     val smallStocks = "smallTestFileEarliestToLatest.csv"
     
-    val dataLoader = new LoadingDataFromCSVToIND
+    val dataLoader = new DataLoader
     val trainingData = dataLoader.getDataSetFromCSV(folderPath + stocksTrainingFileName)
     
-    val testLoader = new LoadingDataFromCSVToIND
+    val testLoader = new DataLoader
     val testData = testLoader.getDataSetFromCSV(folderPath + stocksTestFileName)
     var testIter = testData.iterator()
     
