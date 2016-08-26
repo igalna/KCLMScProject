@@ -32,6 +32,7 @@ class NNEntity(val name: String,
       trainingData += arr
       val trainWith = dataLoader.getDataSetFromListBuffer(trainingData)
       (0 until iterations).foreach { x => net.fit(trainWith) }
+      //net.clear()
       if (trainingData.size > historyToKeep) {
         trainingData.remove(0)
       }

@@ -50,6 +50,7 @@ class NNMutatorEntity(val name: String,
       trainingData += arr
       val trainWith = dataLoader.getDataSetFromListBuffer(trainingData)
       (0 until iterations).foreach { x => net.fit(trainWith) }
+      //net.clear()
       if (trainingData.size > historyToKeep) {
         trainingData.remove(0)
       }
@@ -79,7 +80,13 @@ class NNMutatorEntity(val name: String,
         println("Inside choice less than percentOfOptimal")
         map = nnm.mutateFromMap(map)
         println
+        println
+        println
+        println
         println("NN at iteration : " + iterNum + " : " + map)
+        println
+        println
+        println
         println
         net = nnb.buildFromMap(map)
       }

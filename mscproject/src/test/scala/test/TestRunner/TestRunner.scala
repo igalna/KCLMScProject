@@ -33,11 +33,30 @@ class TestRunner extends FlatSpec {
   val smallCurrencies = "currenciesSmallEarliestToLatest.csv"
   val stocksThenCurrencies = "stocksThenCurrencies.csv"
   val currenciesThenStocks = "currenciesThenStocks.csv"
+
   val blockSize50Intermixed = "unequalLengthTest.csv"
-  val blockSize10Length500StocksCurrencies = "blockSize10Length500StocksCurrencies.csv"
-  val blockSize10Length500CurrenciesStocks = "blockSize10Length500CurrenciesStocks.csv"
+
+  val blockSize3Length100CurrenciesStocks = "blockSize3Length100CurrenciesStocks.csv"
+  val blockSize3Length100StocksCurrencies = "blockSize3Length100StocksCurrencies.csv"
+  
+  val blockSize3Length6CurrenciesStocks = "blockSize3Length6CurrenciesStocks.csv"
+  
+  val blockSize3Length12StocksCurrencies = "blockSize3Length12StocksCurrencies.csv"
+  
   val blockSize5Length100CurrenciesStocks = "blockSize5Length100CurrenciesStocks.csv"
   val blockSize5Length100StocksCurrencies = "blockSize5Length100StocksCurrencies.csv"
+  
+  val blockSize5Length402CurrenciesStocks = "blockSize5Length402CurrenciesStocks.csv"
+  val blockSize5Length402StocksCurrencies = "blockSize5Length402StocksCurrencies.csv"
+  
+  val blockSize10Length500StocksCurrencies = "blockSize10Length500StocksCurrencies.csv"
+  val blockSize10Length500CurrenciesStocks = "blockSize10Length500CurrenciesStocks.csv"
+  
+  val blockSize10Length100CurrenciesStocks = "blockSize10Length100CurrenciesStocks.csv"
+  val blockSize10Length100StocksCurrencies = "blockSize10Length100StocksCurrencies.csv"
+  
+  val blockSize10Length402CurrenciesStocks = "blockSize10Length402CurrenciesStocks.csv"
+  val blockSize10Length402StocksCurrencies = "blockSize10Length402StocksCurrencies.csv"
   
   val stocks501 = "stocks501.csv"
   val currencies501 = "currencies501.csv"
@@ -57,10 +76,13 @@ class TestRunner extends FlatSpec {
   val CurrenciesThen100StocksRecent = "100CurrenciesThen100StocksRecent.csv"
   val StocksThen100CurrenciesRecent = "100StocksThen100CurrenciesRecent.csv"
   
+  val currencies1900something = "currencies1900something.csv"
+  val currencies501Recent = "currencies501Recent.csv"
+  
   val dataLoader = new DataLoader
   val graphDrawer = new Visualization
   
-  val runner = new Runner(dataLoader, graphDrawer, folderPath + blockSize25Length402StocksCurrencies)
+  val runner = new Runner(dataLoader, graphDrawer, folderPath + blockSize10Length100StocksCurrencies)
   
   var numOutputs = runner.numOutputs
   println("numOutputs : " + numOutputs)
@@ -121,10 +143,10 @@ class TestRunner extends FlatSpec {
     
     val creator = new Creator
     creator.setNumberOfDataItemsToCreate(300)
-    creator.setRangeToCreateDataFromWithin(101)
+    creator.setRangeToCreateDataFromWithin(2.5)
     val creatorEntity = new NNCreatorEntity("Creator Entity", getNN,
                                             20,
-                                            4,
+                                            30,
                                             creator)
     
 
@@ -134,7 +156,7 @@ class TestRunner extends FlatSpec {
                                             20,
                                             30,
                                             new NNMutator(50),
-                                            75,
+                                            50,
                                             10)
 // use with    blockSize5Length100StocksCurrencies
 //    val greatResults = new NNMutatorEntity("Mutator",
@@ -145,7 +167,7 @@ class TestRunner extends FlatSpec {
 //                                            75,
 //                                            10)
     
-    val entityList:List[Entity] = List(entity, creatorEntity)
+    val entityList:List[Entity] = List(entity, mutatorEntity)
     
     runner.setEntities(entityList)
     runner.run
@@ -207,21 +229,21 @@ class TestRunner extends FlatSpec {
       .list()
       .layer(0, new GravesLSTM.Builder()
         .nIn(numOutputs)
-        .nOut(30)
+        .nOut(50)
         .activation("tanh")
         .build())
       .layer(1, new GravesLSTM.Builder()
-        .nIn(30)
-        .nOut(30)
+        .nIn(50)
+        .nOut(50)
         .activation("tanh")
         .build())
       .layer(2, new GravesLSTM.Builder()
-        .nIn(30)
-        .nOut(30)
+        .nIn(50)
+        .nOut(50)
         .activation("tanh")
         .build())
       .layer(3, new RnnOutputLayer.Builder(LossFunction.MCXENT)
-        .nIn(30)
+        .nIn(50)
         .nOut(numOutputs)
         .activation("softmax")
         .build())
@@ -276,7 +298,7 @@ class TestRunner extends FlatSpec {
     
     val iterations = "1"
     map += ("iterations" -> iterations)
-    val learningRate = "0.01"
+    val learningRate = "0.001"
     map += ("learningRate" -> learningRate)
     val optimizationAlgo = "STOCHASTIC_GRADIENT_DESCENT"
     map += ("optimizationAlgo" -> optimizationAlgo)
