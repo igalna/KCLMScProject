@@ -34,7 +34,7 @@ class NNCreatorEntity(val name: String,
       val trainWith = dataLoader.getDataSetFromListBuffer(
                                  creator.createDataFromAverageOfEachItem)
       (0 until iterations).foreach { x => net.fit(trainWith) }
-      net.clear()
+      //net.clear()
       if (creator.getSizeOfKnownData > historyToKeep) {
         creator.removeDataFromKnownData
       }
